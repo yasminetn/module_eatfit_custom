@@ -1,0 +1,55 @@
+<odoo>
+       <record id="view_partner_property_form_consultation" model="ir.ui.view">
+            <field name="name">res.partner.consultation.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="after">
+                    <page string="Fiche consultation" name="fiche_consultation" >
+
+                         <group>
+                            <group string="Informations Générales" name="info" priority="1">
+                                        <field name="create_date"/>
+                                        <field name="genre"/>
+                                        <field name="situation_famil"/>
+                                        <field name="natinali"/>
+                                        <field name="medium"/>
+                                        <field name="club"/>
+                                        <field name="frequence"/>
+                                        <field name="objectif"/>
+                                        <field name="nb_cal"/>
+                                        <field name="poids"/>
+                                        <field name="taille"/>
+                             </group>
+                             <group>
+                                 <field name="tabac" widget="radio"/>
+                                 <field name="alcol" widget="radio"/>
+                                 <field name="sommeil" widget="radio"/>
+                                 <field name="maladie"/>
+                                 <field name="allergie"/>
+                                 <field name="medicaments"/>
+                                 <field name="menipause"/>
+                             </group>
+                        </group>
+                        <group string="Fiches Consultation" name="fiche">
+                                <field name="fiche_consultation" nolabel="1">
+                                    <tree editable="bottom" delete="0">
+                                        <field name="date"/>
+                                        <field name="taille"/>
+                                        <field name="poids"/>
+                                        <field name="grasse"/>
+                                        <field name="musculaire"/>
+                                        <field name="tail"/>
+                                        <field name="hanches"/>
+                                        <field name="circonference"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+</odoo>

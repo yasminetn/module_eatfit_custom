@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="eatfit_custom.livraison_report">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <t t-set="data_report_landscape" t-value="True"/>
+            <t t-call="web.internal_layout">
+                <t t-set="docs" t-value="docs.with_context()"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div align="center">
+                        <br/>
+                        <h2>Liste des livraisons</h2>
+                    </div>
+
+                    <br/>
+                    <table border="1" class="table table-condensed" style="border-style:solid">
+                        <tr style="height:30%">
+                            <td style="border: 1px solid black" align="center">Date de début</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.start_date"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Date de fin</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.end_date"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table border="1" class="table table-condensed" style="border-style:solid">
+
+                        <tr style="height:30%">
+                            <td style="border: 1px solid black" align="center">Zone</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.zone"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Mode</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.livraison_type"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Horaire</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.livraison_mode"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-condensed table-sm table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Signature</th>
+                                <th>Sacs</th>
+                                <th>Bleus</th>
+                                <th>Type Client</th>
+                                <th name="partner_name">Client</th>
+                                <th>Mobile</th>
+                                <th>Zone</th>
+                                <th>Ville</th>
+                                <th>Adresse</th>
+                                <th>Mode</th>
+                                <th>Horaire</th>
+                                <th>Sacs Non Rendu</th>
+<!--                                <th>Bleu Non Rendu</th>-->
+                                <th>Montant Du</th>
+                                <th>livreur</th>
+                                <th style="width:10%">Note</th>
+                                <!--                            <th>Commande</th>-->
+                                <!--                            <th>Date</th>-->
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-foreach="livraisons" t-as="livraison">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <span t-field="livraison.partner_priority"/>
+                                    </td>
+                                    <td name="partner_name">
+                                        <span t-field="livraison.partner_name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_mobile"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_zone"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_ville"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_Adresse"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.livraison_type"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.livraison_mode"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.total_sac_rendu"/>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <span t-field="livraison.total_bleu_rendu"/>-->
+<!--                                    </td>-->
+                                    <td>
+                                        <span t-if="not(livraison.aff_montant_du)" t-field="livraison.montant_du"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_livreur"/>
+                                    </td>
+                                    <td style="width:10%">
+                                        <span t-field="livraison.note"/>
+                                    </td>
+                                    <!--                           <td><span t-field="livraison.sale_id"/></td>-->
+                                    <!--                           <td><span t-field="livraison.livraison"/></td>-->
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+
+                    <h2 class="text-center">Liste des Recouvrements</h2>
+                    <br/>
+
+
+                    <table class="table table-condensed table-sm table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Client</th>
+                                <th>Mobile</th>
+                                <th>Ville</th>
+                                <th>Adresse</th>
+                                <th>Total Montant Du</th>
+                                <th>Sac Non Rendu</th>
+<!--                                <th>Bleu Non Rendu</th>-->
+                                <th>Zone</th>
+                                <th>Livreur</th>
+                                <th>Horaire</th>
+                                <th style="width:10%">Note</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-foreach="recouvrements" t-as="recouvrement">
+                                <tr>
+                                    <td>
+                                        <span t-field="recouvrement.client"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.mobile"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.ville"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.adresse"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.total_montant_du"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.total_sac_rendu"/>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <span t-field="recouvrement.total_bleu_rendu"/>-->
+<!--                                    </td>-->
+                                    <td>
+                                        <span t-field="recouvrement.zone"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="recouvrement.livreur"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="recouvrement.horaire"/>
+                                    </td>
+                                    <td style="width:10%">
+                                        <span t-field="recouvrement.note"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="eatfit_custom.commande_report">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <!--        <t t-set="data_report_landscape" t-value="True"/>-->
+            <t t-call="web.internal_layout">
+                <t t-set="docs" t-value="docs.with_context()"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div align="center">
+                        <br/>
+                        <h2>Liste des Commandes</h2>
+                    </div>
+                    <br/>
+                    <table border="1" class="table table-condensed table-sm" style="border-style:solid">
+                        <tr style="height:30%">
+                            <td style="border: 1px solid black" align="center">Date de début</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.start_date"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Date de fin</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.end_date"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table border="1" class="table table-condensed table-sm" style="border-style:solid">
+
+                        <tr style="height:30%">
+                            <td style="border: 1px solid black" align="center">Zone</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.zone"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Mode</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.livraison_type"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Horaire</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.livraison_mode"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Livraison</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.calorie"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-condensed table-sm table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th></th>
+                                <th>Calories</th>
+                                <th>Horaire</th>
+                                <th>Zone</th>
+                                <th>Type Client</th>
+                                <th name="partner_name">Client</th>
+                                <th>Repas</th>
+                                <th>Spéciaux</th>
+                                <th>Mode</th>
+                                <th>Preparation</th>
+                                <th>id</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="livraisons" t-as="livraison">
+                                <tr>
+                                    <td>
+                                        <span t-esc="i"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="livraison.partner_calorie"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.livraison_mode"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_zone"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.partner_priority"/>
+                                    </td>
+                                    <td name="partner_name">
+                                        <span t-field="livraison.partner_name"/>
+                                    </td>
+                                    <td>
+                                        <!--                                    <span t-field="livraison.partner_repas"/>-->
+                                        <table class="table  table-striped">
+                                            <t t-set="s" t-value="1"/>
+                                            <t t-foreach="livraison.partner_repas.split('|')" t-as="value">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="s"/>
+                                                    </td>
+                                                    <t t-set="s" t-value="s+1"/>
+                                                    <td>
+                                                        <span t-esc="value"/>
+                                                    </td>
+                                                </tr>
+
+                                            </t>
+                                        </table>
+
+                                    </td>
+                                    <td>
+
+                                        <table class="table  table-striped">
+                                            <t t-set="e" t-value="1"/>
+
+                                            <t t-foreach="livraison.partner_tags.split('|')" t-as="v">
+                                                <t t-if="v">
+                                                    <tr>
+                                                        <td>
+                                                            <span t-esc="e"/>
+                                                        </td>
+                                                        <t t-set="e" t-value="e+1"/>
+                                                        <td>
+                                                            <span t-esc="v"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </table>
+
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.livraison_type"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.preparation"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.sale_id"/>
+                                    </td>
+                                    <td style="width: 50px;"></td>
+                                </tr>
+                                <t t-set="i" t-value="i+1"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="exigence_report">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <!--        <t t-set="data_report_landscape" t-value="True"/>-->
+
+            <t t-call="web.internal_layout">
+                <t t-set="docs" t-value="docs.with_context()"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div align="center">
+                        <br/>
+                        <h2>Liste des spéciaux</h2>
+                    </div>
+
+                    <br/>
+                    <table border="1" class="table table-condensed table-sm" style="border-style:solid">
+                        <tr style="height:30%">
+                            <td style="border: 1px solid black" align="center">Date de début</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.start_date"/>
+                            </td>
+                            <td style="border: 1px solid black" align="center">Date de fin</td>
+                            <td style="border: 1px solid black" align="center">
+                                <span t-field="docs.end_date"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-condensed table-sm table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th></th>
+                                <th>Calories</th>
+                                <th>Client</th>
+                                <th>Repas</th>
+                                <th>Spéciaux</th>
+                                <th>Date Preparation</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-set="i" t-value="1"/>
+                            <t t-foreach="livraisons" t-as="livraison">
+                                <tr>
+                                    <td>
+                                        <span t-esc="i"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="livraison.partner_calorie"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="livraison.partner_name"/>
+                                    </td>
+                                    <td>
+                                        <!--                                    <span t-field="livraison.partner_repas"/>-->
+                                        <table class="table  table-striped">
+                                            <t t-set="s" t-value="1"/>
+                                            <t t-foreach="livraison.partner_repas.split('|')" t-as="value">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="s"/>
+                                                    </td>
+                                                    <t t-set="s" t-value="s+1"/>
+                                                    <td>
+                                                        <span t-esc="value"/>
+                                                    </td>
+                                                </tr>
+
+                                            </t>
+                                        </table>
+
+                                    </td>
+
+                                    <td>
+
+                                        <table class="table  table-striped">
+                                            <t t-set="e" t-value="1"/>
+                                            <t t-foreach="livraison.partner_tags.split('|')" t-as="v">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="e"/>
+                                                    </td>
+                                                    <t t-set="e" t-value="e+1"/>
+                                                    <td>
+                                                        <span t-esc="v"/>
+                                                    </td>
+                                                </tr>
+
+                                            </t>
+                                        </table>
+
+                                        <!--                                    <strong><span t-field="livraison.partner_tags"/></strong>-->
+
+                                    </td>
+                                    <td>
+                                        <span t-field="livraison.preparation"/>
+                                    </td>
+
+                                </tr>
+                                <t t-set="i" t-value="i+1"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

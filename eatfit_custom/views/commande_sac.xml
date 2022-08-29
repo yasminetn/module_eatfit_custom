@@ -1,0 +1,63 @@
+<odoo>
+    <record id="action_pivot_commande_search" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">eatfit.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="livraison_mode"/>
+                <separator/>
+                <filter string="450" name="a" domain="[('calorie', '=', '450')]"/>
+                <filter string="600" name="b" domain="[('calorie', '=', '600')]"/>
+                <filter string="750" name="b" domain="[('calorie', '=', '750')]"/>
+                <separator/>
+                <separator/>
+                <filter string="Zone A" name="a" domain="[('zone', '=', 'a')]"/>
+                <filter string="Zone B" name="b" domain="[('zone', '=', 'b')]"/>
+<!--                <filter string="Pickup" name="pickup" domain="[('partner_zone', '=', 'pickup')]"/>-->
+<!--                <filter string="Crossfit" name="crossfit" domain="[('partner_zone', '=', 'crossfit')]"/>-->
+                <separator/>
+                <separator/>
+                <filter string="Matin" name="matin" domain="[('livraison_mode', '=', 'matin')]"/>
+                <filter string="Soir" name="soir" domain="[('livraison_mode', '=', 'soir')]"/>
+                <separator/>
+                <filter string="Aujourd'hui" name="aujourdhui"
+                        domain="[('preparation', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Demain" name="demain"
+                        domain="[('preparation', '=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+
+            </search>
+        </field>
+    </record>
+    <record id="action_commande_sac_pivot" model="ir.ui.view">
+        <field name="name">sale.report.pivot</field>
+        <field name="model">eatfit.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Analysis" disable_linking="True" display_quantity="true">
+                <field name="calorie" type="row"/>
+                <field name="livraison_mode" type="row"/>
+                <field name="zone" type="row"/>
+                <field name="partner_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="preparation" interval="day" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_commande_sac" model="ir.actions.act_window">
+        <field name="name">Liste des commandes</field>
+        <field name="res_model">eatfit.report</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="action_commande_sac_pivot"/>
+       <field name="domain">[('repat', '=', True),('etats', '=', 'actif'),('etats_commande', '=', 'sale')]</field>
+        <field name="search_view_id" ref="action_pivot_commande_search"/>
+        <field name="context">{'search_default_aujourdhui': 1}</field>
+    </record>
+    <menuitem id="commande_sac"
+              name="Liste des commandes"
+              action="action_commande_sac"
+              parent="sale.menu_sale_report"
+              sequence="3"/>
+</odoo>

@@ -1,0 +1,155 @@
+<odoo>
+    <record id="eat_order_view_search_inherit_sale" model="ir.ui.view">
+        <field name="name">eat.order.search.inherit.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter" position="after">
+                <separator/>
+
+                <filter string="Actif" name="Actif" domain="[('preparation_status','=','actif')]"/>
+                <filter string="Non actif" name="non_actif" domain="[('preparation_status','=','non_actif')]"/>
+                <filter string="En Suspension" name="en_suspension"
+                        domain="[('preparation_status','=','en_suspension')]"/>
+
+                <separator/>
+                <filter string="BC Actif" name="bc_actif" domain="[('bc_preparation_status','=','actif')]"/>
+                <filter string="BC Non actif" name="bc_non_actif" domain="[('bc_preparation_status','=','non_actif')]"/>
+                <separator/>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="custom_fields_contact_form" model="ir.ui.view">
+        <field name="name">custom fields contact</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name='vat' position="after">
+                <field name="naissance"/>
+                <field name="age"/>
+                <field name="calorie"/>
+                <field name="zone"/>
+                <field name="livreur"/>
+                <field name="actifs_livraison"/>
+                <field name="total_sac_rendu"/>
+                <field name="total_bleu_rendu"/>
+                <field name="caution_en_cours"/>
+                <field name="sac_acheter"/>
+                <field name="execute_get_article" invisible="1"/>
+
+            </field>
+            <page name='internal_notes' position="after">
+                <page name="rapport_commande" string="Historique achat de sac">
+                    <field name="article_bc" readonly="1">
+                        <tree string="Historique achat de sac" editable="bottom">
+                            <field name="reference_bc"/>
+                            <field name="date_bc" widget="date"/>
+                            <field name="date_last_update" widget="date" string="Date de création"/>
+
+                            <field name="article"/>
+                            <field name="choix_sac"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+
+        </field>
+    </record>
+    <record id="view_contact_custom_field_form_inherit" model="ir.ui.view">
+        <field name="name">sale.contact.fields.inherit.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//header//button[@name='action_draft']" position="after">
+                <button name="calcul_actif" type="object" string="Générer Les jours actifs" class="btn btn-primary"
+                        confirm="Voulez-vous vraiment annuler la liste des actifs ."
+                        attrs="{'invisible': [('state', '!=','sale')]}"/>
+            </xpath>
+
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page name="rapport" string="Historique achat de sac">
+                    <field name="historique">
+                        <tree string="historique achat de sac " editable="bottom">
+                            <field name="reference_bc"/>
+                            <field name="date_bc" widget="date"/>
+                            <field name="date_last_update" widget="date" string="Date de création"/>
+                            <field name="article"/>
+                            <field name="choix_sac"/>
+
+                        </tree>
+                    </field>
+                </page>
+
+            </xpath>
+
+
+            <field name="partner_id" position="after">
+                <field name="naissance"/>
+                <field name="age"/>
+                <field name="calorie"/>
+
+                <field name="zone"/>
+<!--                <field name="historique_refraiche" invisible="1"/>-->
+
+                <field name="livreur"/>
+                <field name="total_sac_rendu" force_save="1" invisible="1"/>
+                <field name="total_bleu_rendu" force_save="1" invisible="1"/>
+                <field name="sac_acheter" force_save="1" invisible="1"/>
+                <field name="caution_en_cours" force_save="1" invisible="1"/>
+                <field name="total_sac_rendu_store" force_save="1" invisible="1"/>
+                <field name="total_bleu_rendu_store" force_save="1" invisible="1"/>
+                <field name="sac_acheter_store" force_save="1" invisible="1"/>
+                <field name="caution_en_cours_store" force_save="1" invisible="1"/>
+
+                <field name="total_sac_rendu_store1" force_save="1" readonly="1"/>
+                <field name="total_bleu_rendu_store1" force_save="1" readonly="1"/>
+                <field name="sac_acheter_store1" force_save="1" readonly="1"/>
+                <field name="caution_en_cours_store1" force_save="1" readonly="1"/>
+
+            </field>
+            <field name="payment_term_id" position="replace">
+                <field name="date_creation"/>
+                <field name="date_debut"/>
+                <field name="nb_jours"/>
+                <field name="date_fin"/>
+                <field name="samedi"/>
+                <field name="livraison_mode"/>
+                <field name="livraison_type"/>
+                <field name="objectif"/>
+                <field name="formule"/>
+                <field name="choix_sac"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_contact_custom_field_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.contact.fields.inherit.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="date_creation"/>
+                <field name="date_debut"/>
+                <field name="date_fin"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_inherit" model="ir.ui.view">
+        <field name="name">product_template_inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='options']" position="inside">
+                <div>
+                    <field name="repat"/>
+                    <label for="repat"/>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

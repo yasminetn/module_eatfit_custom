@@ -1,0 +1,12 @@
+<odoo>
+<!--    <record id="view_payment_form_inherit" model="ir.ui.view">-->
+<!--                <field name="name">sale.pqyment.inherit.form</field>-->
+<!--                <field name="model">sale.order</field>-->
+<!--                <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//form//header//button[@name='action_draft']" position="after">-->
+<!--                        <button name="action_sale_payment" id="sale_payment_btn" type="object" class="oe_highlight"  string="Register Payment" groups="account.group_account_invoice"/>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--    </record>-->
+</odoo>

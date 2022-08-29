@@ -1,0 +1,45 @@
+<odoo>
+         <record id="crm_case_form_view_note" model="ir.ui.view">
+            <field name="name">crm.lead.oppor.inherited.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="shz_note"/>
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page string="Formule">
+                        <group>
+                              <field name="nb_jours"/>
+                             <field name="nb_semaines"/>
+                             <field name="nb_plat"/>
+                        </group>
+
+                        <group>
+                              <group string="Repas" name="repas">
+                                <field name="repas" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="taille"/>
+                                    </tree>
+                                </field>
+
+                        </group>
+                             <group string="Collations" name="collation">
+                                <field name="collation" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="nbr"/>
+                                    </tree>
+                                </field>
+
+                            </group>
+                        </group>
+
+
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+</odoo>

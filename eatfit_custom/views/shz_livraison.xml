@@ -1,0 +1,235 @@
+<odoo>
+<!--    <record id="shz_livraison_view_partner_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">res.partner.form</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--        <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='name']" position="replace">-->
+<!--                <field name="priority_etoil" widget="priority" class="mr-3"/>-->
+
+<!--                <field name="name" default_focus="1" placeholder="Name"-->
+<!--                       attrs="{'required' : [('type', '=', 'contact')]}"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="shz_priority_view_sale_order_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">sale.order.form</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='partner_id']" position="replace">-->
+<!--&lt;!&ndash;                <field name="priority_etoil" widget="priority" class="mr-3" string=""/>&ndash;&gt;-->
+<!--                <field name="partner_id" widget="res_partner_many2one"-->
+<!--                       context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"-->
+<!--                       options="{&quot;always_reload&quot;: True}"/>-->
+<!--            </xpath>-->
+
+<!--            &lt;!&ndash;            <xpath expr="//field[@name='commission_total']" position="after">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <field name="montant_du"  class="mr-3" string="Total Montant du"/>&ndash;&gt;-->
+
+<!--            &lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="shz_view_livreur_form" model="ir.ui.view">
+        <field name="name">eatfit.livreur.form</field>
+        <field name="model">eatfit.livreur</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="zone"/>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="shz_view_livreur_tree" model="ir.ui.view">
+        <field name="name">eatfit.livreur.tree</field>
+        <field name="model">eatfit.livreur</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="zone"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_livreur" model="ir.actions.act_window">
+        <field name="name">Liste de Livreur</field>
+        <field name="res_model">eatfit.livreur</field>
+        <field name="view_mode">tree,form</field>
+        <!--        <field name="view_id" ref="eatfit_custom.shz_view_livreur_tree"/>-->
+    </record>
+    <menuitem id="list_livreur"
+              name="Livreur"
+              action="action_livreur"
+              parent="sale.menu_sales_config"
+              sequence="2"/>
+
+
+    <record id="cree_note" model="ir.actions.server">
+        <field name="name">Creé Note</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.shz_note()</field>
+    </record>
+    <record id="shz_sale_note_form" model="ir.ui.view">
+        <field name="name">sale.note.form</field>
+        <field name="model">sale.note</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="note"/>
+                    <field name="sale_ids" widget="many2many_tags"/>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                </group>
+                <group>
+                    <field name="choix_note" widget="radio"/>
+                </group>
+                <footer>
+                    <button name="gen_sale_note" type="object" string="Crèer Note"
+                            class="oe_highlight" icon="fa-money"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel" icon="fa-times"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    _______Recouvrement____________-->
+
+    <record id="shz_view_recouvrement_form" model="ir.ui.view">
+        <field name="name">shz.recouvrement.form</field>
+        <field name="model">shz.recouvrement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="client"/>
+                            <field name="mobile"/>
+                            <field name="ville"/>
+                            <field name="adresse"/>
+                            <field name="total_montant_du"/>
+                            <field name="total_sac_rendu"/>
+                            <field name="total_bleu_rendu"/>
+
+                        </group>
+                        <group>
+                            <field name="zone"/>
+                            <field name="livreur"/>
+                            <field name="horaire"/>
+                            <field name="etat"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="shz_view_recouvrement_tree" model="ir.ui.view">
+        <field name="name">shz.recouvrement.tree</field>
+        <field name="model">shz.recouvrement</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="true" editable="bottom">
+                <field name="client" readonly="1"/>
+                <field name="mobile" readonly="1"/>
+                <field name="ville" readonly="1"/>
+                <field name="adresse" readonly="1"/>
+                <field name="total_montant_du" readonly="1"/>
+                <field name="total_sac_rendu" readonly="1"/>
+                <field name="total_bleu_rendu" readonly="1"/>
+                <field name="zone" readonly="1"/>
+                <field name="livreur" readonly="1"/>
+                <field name="horaire" readonly="1"/>
+                <field name="etat"/>
+                <field name="note" readonly="0"/>
+            </tree>
+        </field>
+    </record>
+    <record id="shz_view_recouvrement_search" model="ir.ui.view">
+        <field name="name">shz.recouvrement.search</field>
+        <field name="model">shz.recouvrement</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="En Cours" name="etat" domain="[('etat','=','en_cours')]"
+                />
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_recouvrement" model="ir.actions.act_window">
+        <field name="name">Liste Recouvrement</field>
+        <field name="res_model">shz.recouvrement</field>
+        <field name="view_mode">tree,form,search</field>
+        <!--        <field name="domain">[('etat', '=', 'en_cours')]</field>-->
+        <field name="context">{"search_default_etat":1}</field>
+
+
+        <!--        <field name="view_id" ref="eatfit_custom.shz_view_livreur_tree"/>-->
+    </record>
+
+
+    <record id="cree_recouvrement" model="ir.actions.server">
+        <field name="name">Recouvrement</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.shz_recouvrement()</field>
+    </record>
+
+
+    <record id="shz_sale_recouvrement_form" model="ir.ui.view">
+        <field name="name">sale.recouvrement.form</field>
+        <field name="model">sale.recouvrement</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="livreur"/>
+                        <field name="note"/>
+                    </group>
+                </group>
+                <field name="sale_recouvrement_line">
+                    <tree editable="bottom" create="false" edit="false">
+                        <field name="client"/>
+<!--                        <field name="mobile"/>-->
+<!--                        <field name="ville"/>-->
+<!--                        <field name="adresse"/>-->
+                        <field name="total_montant_du"/>
+                        <field name="order" invisible="0"/>
+<!--                        <field name="total_bleu_rendu"/>-->
+<!--                        <field name="zone"/>-->
+                        <field name="horaire"/>
+                        <field name="etat"/>
+                    </tree>
+                </field>
+
+                <footer>
+                    <button name="create_recouvrement" type="object" string="Crèer Recouvrement"
+                            class="oe_highlight" icon="fa-money"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel" icon="fa-times"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem
+            id="eatfit_custom.menu_recouvrement"
+            name="Recouvrements"
+            parent="sale.sale_menu_root"
+            sequence="8"
+            action="action_recouvrement"
+    />
+
+</odoo>

@@ -1,0 +1,72 @@
+<odoo>
+    <record id="action_livraison_search" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">eatfit.actifs</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_name"/>
+                <field name="livraison_mode"/>
+                <separator/>
+                <filter string="Matin" name="matin" domain="[('livraison_mode', '=', 'matin')]"/>
+                <filter string="Soir" name="soir" domain="[('livraison_mode', '=', 'soir')]"/>
+                <separator/>
+                <filter string="Aujourd'hui" name="aujourdhui"
+                        domain="[('livraison', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Demain" name="demain"
+                        domain="[('livraison', '=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Zone A" name="a" domain="[('partner_zone', '=', 'a')]"/>
+                <filter string="Zone B" name="b" domain="[('partner_zone', '=', 'b')]"/>
+                <filter string="Pickup" name="pickup" domain="[('partner_zone', '=', 'pickup')]"/>
+                <filter string="Crossfit" name="crossfit" domain="[('partner_zone', '=', 'crossfit')]"/>
+                <separator/>
+                <separator/>
+                <filter string="Pickup" name="in" domain="[('livraison_type', '=', 'in')]"/>
+                <filter string="Livraison" name="out" domain="[('livraison_type', '=', 'out')]"/>
+                <separator/>
+
+            </search>
+        </field>
+    </record>
+    <record id="eat_action_livraison_tree" model="ir.ui.view">
+        <field name="name">sale.report.tree</field>
+        <field name="model">eatfit.actifs</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Analysis" create="false" editable="bottom" multi_edit="1" default_order='sequence asc'>
+                <field name="sequence" widget="handle"/>
+<!--                <field name="partner_priority" string="Type Client" widget="priority" />-->
+                <field name="partner_name"/>
+                <field name="partner_mobile"/>
+                <field name="partner_zone"/>
+                <field name="partner_ville"/>
+                <field name="partner_Adresse"/>
+
+                <field name="livraison_type"/>
+                <field name="livraison_mode"/>
+                <field name="total_sac_rendu"/>
+                <field name="total_bleu_rendu"/>
+                <field name="montant_du"/>
+                <field name="aff_montant_du"/>
+                <field name="partner_livreur"/>
+                <field name="livraison"/>
+                <field name="note"/>
+                <field name="sale_id" readonly="1" />
+
+            </tree>
+        </field>
+    </record>
+    <record id="eat_action_livraison" model="ir.actions.act_window">
+        <field name="name">Liste des livraisons</field>
+        <field name="res_model">eatfit.actifs</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="eat_action_livraison_tree"/>
+        <field name="domain">[('etats', '=', 'actif'),('sale_id.state', '=', 'sale')]</field>
+        <field name="search_view_id" ref="action_livraison_search"/>
+        <field name="context">{'search_default_aujourdhui': 1}</field>
+    </record>
+    <menuitem id="livraison"
+              name="Liste des livraisons"
+              action="eat_action_livraison"
+              parent="sale.menu_sale_report"
+              sequence="3"/>
+</odoo>

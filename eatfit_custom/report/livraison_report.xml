@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <report-->
+<!--            id="eatfit_custom.action_livraison_raport"-->
+<!--            string="Imprimer les livraisons"-->
+<!--            model="report.livraison.report"-->
+<!--            report_type="qweb-pdf"-->
+<!--            file="eatfit_custom.livraison_report"-->
+<!--            name="eatfit_custom.livraison_report"-->
+<!--        />-->
+        <report
+            id="eatfit_custom.action_commande_raport"
+            string="Imprimer les commande"
+            model="report.commande.report"
+            report_type="qweb-pdf"
+            file="eatfit_custom.commande_report"
+            name="eatfit_custom.commande_report"
+        />
+
+ <report
+            id="eatfit_custom.action_commandeexigence_raport"
+            string="Imprimer les spéciaux"
+            model="rapport.commandeexigence"
+            report_type="qweb-pdf"
+            file="eatfit_custom.exigence_report"
+            name="eatfit_custom.exigence_report"
+        />
+        <report
+            id="eatfit_custom.action_etiquette_raport"
+            string="Imprimer les etiquettes"
+            model="rapport.etiquette"
+            report_type="xlsx"
+            name="eatfit_custom.etiquette_reporteatfit"
+            file="eatfit_custom.etiquette_reporteatfit"
+            attachment_use="False"
+        />
+        <report
+    id="eatfit_custom.etquette_xlsx"
+    model="rapport.etiquette"
+    string="Print to XLSX"
+    report_type="xlsx"
+    name="module_name.report_name"
+    file="BDD Etiquettes"
+    attachment_use="False"
+/>
+    </data>
+</odoo>

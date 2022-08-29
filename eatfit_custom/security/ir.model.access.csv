@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_eatfit_objectif,access_eatfit_objectif,model_eatfit_objectif,base.group_user,1,1,1,1
+access_eatfit_formule,access_eatfit_formule,model_eatfit_formule,base.group_user,1,1,1,1
+access_eatfit_actifs,access_eatfit_actifs,model_eatfit_actifs,base.group_user,1,1,1,1
+access_eat_report,access_eat_report,model_eatfit_report,base.group_user,1,1,1,1
+access_eatfit_livreur,access_eatfit_livreur,model_eatfit_livreur,base.group_user,1,1,1,1
+access_eatfit_consultation,access_eatfit_consultation,model_eatfit_consultation,base.group_user,1,1,1,1
+access_utm_club,access_utm_club,model_utm_club,base.group_user,1,1,1,1
+access_crm_note,access_crm_note,model_crm_note,base.group_user,1,1,1,1
+access_crm_repas,access_crm_repas,model_crm_repas,base.group_user,1,1,1,1
+access_crm_collation,access_crm_collation,model_crm_collation,base.group_user,1,1,1,1
+access_crm_collation,access_eatfit_rapport_bc,model_eatfit_rapport_bc,base.group_user,1,1,1,1
+access_shz_recouvrement,access_shz_recouvrement,model_shz_recouvrement,base.group_user,1,1,1,1
+access_crm_collation,access_crm_collation,model_crm_collation,base.group_user,1,1,1,1
+access_eatfit_rapport_bc,access_eatfit_rapport_bc,model_eatfit_rapport_bc,base.group_user,1,1,1,1

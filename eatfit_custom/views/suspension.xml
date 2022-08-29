@@ -1,0 +1,45 @@
+<odoo>
+    <record id="view_sales_eat_filter" model="ir.ui.view">
+        <field name="name">sale.order.list.select</field>
+        <field name="model">sale.order</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Sales Order">
+                <field name="name" string="Commandes" filter_domain="['|', '|', ('name', 'ilike', self), ('client_order_ref', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                <field name="partner_id" operator="child_of"/>
+
+                <group expand="0" string="Group By">
+                    <filter name="customer" string="Customer" domain="[]" context="{'group_by': 'partner_id'}"/>
+                 </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_sales_order_eat_tree" model="ir.ui.view">
+        <field name="name">sale.order.eat.form</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <field name="state" invisible="1"/>
+                <field name="date_creation"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="nb_jours_suspension"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_orders_eat_fit" model="ir.actions.act_window">
+        <field name="name">Historique des suspensions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sales_eat_filter"/>
+        <field name="context">{}</field>
+        <field name="domain">[('state', '=', 'sale'),('nb_jours_suspension','>',0)]</field>
+        <field name="view_id" ref="view_sales_order_eat_tree"/>
+    </record>
+    <menuitem id="actifs_suspension"
+              name="Historique des suspensions "
+              action="action_orders_eat_fit"
+              parent="sale.menu_sale_report"
+              sequence="2"/>
+</odoo>

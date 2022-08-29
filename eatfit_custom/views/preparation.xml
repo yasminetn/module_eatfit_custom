@@ -1,0 +1,48 @@
+<odoo>
+    <record id="action_list_preparation_search" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">eatfit.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="livraison_mode"/>
+                <separator/>
+                <filter string="Matin" name="matin" domain="[('livraison_mode', '=', 'matin')]"/>
+                <filter string="Soir" name="soir" domain="[('livraison_mode', '=', 'soir')]"/>
+                <separator/>
+                <filter string="Aujourd'hui" name="aujourdhui"
+                        domain="[('preparation', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Demain" name="demain"
+                        domain="[('preparation', '=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+
+            </search>
+        </field>
+    </record>
+    <record id="action_list_preparation_pivot" model="ir.ui.view">
+        <field name="name">sale.report.pivot</field>
+        <field name="model">eatfit.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Analysis" disable_linking="True" display_quantity="true">
+                <field name="product_id" type="row"/>
+                <field name="preparation" interval="day" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_list_preparation" model="ir.actions.act_window">
+        <field name="name">Liste de préparation</field>
+        <field name="res_model">eatfit.report</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="action_list_preparation_pivot"/>
+        <field name="domain">[('repat', '=', True),('etats', '=', 'actif'),('etats_commande', '=', 'sale')]</field>
+        <field name="search_view_id" ref="action_list_preparation_search"/>
+        <field name="context">{'search_default_aujourdhui': 1}</field>
+    </record>
+    <menuitem id="list_preparation"
+              name="Liste de préparation"
+              action="action_list_preparation"
+              parent="sale.menu_sale_report"
+              sequence="2"/>
+</odoo>
