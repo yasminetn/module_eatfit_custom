@@ -16,7 +16,7 @@ class RestAPI(http.Controller):
     @http.route('/api/sale/', type='http', csrf=False, cros="*", auth="public", methods=['POST'], website=True)
     def create_rig(self, **kw):
         print('ok bb')
-        request.session.authenticate(request.session.db, 'admin', 'admin')
+        request.session.authenticate(request.session.db, 'boutitinizar@gmail.com', 'Mnb22433')
         data = request.params
         print("data", data)
 
